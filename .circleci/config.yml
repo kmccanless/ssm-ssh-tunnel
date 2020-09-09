@@ -17,15 +17,7 @@ jobs:
       - run:
           name: Install ssm plugin
           command: sudo dpkg -i session-manager-plugin.deb
-     # - run:
-     #     name: SSM Port Forward
-     #     command: |
-     #       aws ssm start-session \
-     #       --target "i-06c66f923f50e6741" \
-     #       --document-name AWS-StartPortForwardingSession \
-     #       --parameters '{"portNumber":["'22'"],"localPortNumber":["'8080'"]}'
-     #     background: true
-      -run:
+      - run:
           name: SSH Tunnel
           command:  |
             ssh \
