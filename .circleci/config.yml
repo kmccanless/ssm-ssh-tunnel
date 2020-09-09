@@ -29,7 +29,7 @@ jobs:
           shell: /bin/bash
           command: |
             COUNT=0
-            until nc -z localhost 22; do
+            until nc -z localhost 8080; do
               if [ $COUNT -ge 15 ]; then
                 echo "Port forwarding setup timeout";
                 exit 1;
