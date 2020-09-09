@@ -17,20 +17,30 @@ jobs:
       - run:
           name: Install ssm plugin
           command: sudo dpkg -i session-manager-plugin.deb
-      - run:
-          name: SSM Port Forward
-          command: |
-            aws ssm start-session \
-            --target "i-06c66f923f50e6741" \
-            --document-name AWS-StartPortForwardingSession \
-            --parameters '{"portNumber":["'22'"],"localPortNumber":["'8080'"]}'
-          background: true
+     # - run:
+     #     name: SSM Port Forward
+     #     command: |
+     #       aws ssm start-session \
+     #       --target "i-06c66f923f50e6741" \
+     #       --document-name AWS-StartPortForwardingSession \
+     #       --parameters '{"portNumber":["'22'"],"localPortNumber":["'8080'"]}'
+     #     background: true
+      -run:
+          name: SSH Tunnel
+          command:  |
+            ssh \
+            -Nf -M \
+            -L 9090:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
+            -o "UserKnownHostsFile=/dev/null" \
+            -o "StrictHostKeyChecking=no" \
+            -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=us-east-2 \” \
+            -vvv ec2-user@i-06c66f923f50e6741
       - run:
           name: Wait until port forwarding becomes available or timeout
           shell: /bin/bash
           command: |
             COUNT=0
-            until nc -z localhost 8080; do
+            until nc -z localhost 9090; do
               if [ $COUNT -ge 15 ]; then
                 echo "Port forwarding setup timeout";
                 exit 1;
