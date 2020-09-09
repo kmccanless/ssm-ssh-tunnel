@@ -23,7 +23,7 @@ jobs:
             aws ssm start-session \
             --target "i-06c66f923f50e6741" \
             --document-name AWS-StartPortForwardingSession \
-            --parameters '{"portNumber":["'22'"],"localPortNumber":["'22'"]}'
+            --parameters '{"portNumber":["'22'"],"localPortNumber":["'8080'"]}'
       - run:
           name: Wait until port forwarding becomes available or timeout
           shell: /bin/bash
