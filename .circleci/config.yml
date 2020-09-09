@@ -37,6 +37,12 @@ jobs:
               ((COUNT++))
               sleep 1
             done
+      - run:
+          name: Confirmation
+          command: echo 'it worked'
+      - run:
+          name: Release all ssm sessions
+          command: ps u | grep -- 'aws ssm start-session' | grep -v 'grep' | awk '{print $2}' | xargs kill
 workflows:
   test:
     jobs:
