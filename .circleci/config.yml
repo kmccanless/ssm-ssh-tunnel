@@ -18,6 +18,6 @@ jobs:
           name: Install ssm plugin
           command: sudo dpkg -i session-manager-plugin.deb
 workflows:
-  aws-cli:
+  test:
     jobs:
-      - aws-cli-example:
+      - aws-cli-example
