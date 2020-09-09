@@ -1,0 +1,24 @@
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@1.3.0
+jobs:
+  aws-cli-example:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/setup:
+          aws-region: AWS_STAGING_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          skip-install-check: << parameters.skip_install_check >>
+      - run:
+          name: Download ssm plugin (Ubuntu)
+          command: curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
+      - run:
+          name: Install ssm plugin
+          command: sudo dpkg -i session-manager-plugin.deb
+workflows:
+  aws-cli:
+    jobs:
+      - aws-cli-example:
+          context: aws
