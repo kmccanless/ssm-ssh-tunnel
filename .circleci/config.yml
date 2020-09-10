@@ -29,7 +29,7 @@ jobs:
           name: SSH Tunnel
           command:  |
             ssh \
-            -Nf -M -4\
+            -Nf -M -4 \
             -L 9090:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
             -o "UserKnownHostsFile=/dev/null" \
             -o "StrictHostKeyChecking=no" \
