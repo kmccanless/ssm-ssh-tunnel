@@ -9,7 +9,7 @@ jobs:
       - run:
           name: install mysql
           command: |
-            apt-get install mysql-client
+            sudo apt-get install mysql-client
       - aws-cli/setup:
           aws-region: AWS_REGION
           aws-access-key-id: AWS_ACCESS_KEY_ID
