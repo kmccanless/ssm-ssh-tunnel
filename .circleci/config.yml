@@ -34,6 +34,20 @@ jobs:
             -4 -vvv -N -q \
             -L 9191:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
             ec2-user@18.217.248.4
+          background: true
+      - run:
+          name: Wait for tunnel establishment
+          shell: /bin/bash
+          command: |
+            COUNT=0
+            until nc -z 127.0.0.1 9191; do
+              if [ $COUNT -ge 10 ]; then
+                echo "ssh tunnel set up timeout";
+                exit 1;
+              fi;
+              ((COUNT++))
+              sleep 1
+            done
       - run:
           name: Release all ssh tunnel
           command: ps u | grep -- 'ssh -L' | grep -v 'grep' | awk '{print $2}' | xargs kill
