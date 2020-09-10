@@ -31,9 +31,10 @@ jobs:
             ssh \
             -o "UserKnownHostsFile=/dev/null" \
             -o "StrictHostKeyChecking=no" \
-            -4 -vvv -N -q \
+            -4 -vvv -q \
             -L 9191:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
-            ec2-user@18.217.248.4
+            -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=us-east-2" \
+            ec2-user@i-06c66f923f50e6741
           background: true
       - run:
           name: Wait for tunnel establishment
