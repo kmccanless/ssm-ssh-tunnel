@@ -31,7 +31,7 @@ jobs:
             ssh \
             -o "UserKnownHostsFile=/dev/null" \
             -o "StrictHostKeyChecking=no" \
-            -4 -vvv \
+            -4 -vvv -N -q \
             -L 9191:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
             -Nf ec2-user@18.217.248.4
       - run:
