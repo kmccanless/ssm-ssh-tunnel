@@ -49,8 +49,9 @@ jobs:
               sleep 1
             done
       - run:
-          name: Release all ssh tunnel
-          command: ps u | grep -- 'ssh -L' | grep -v 'grep' | awk '{print $2}' | xargs kill
+          name: test mysql
+          command: |
+            mysql --user=$MYSQL_USER --host=127.0.0.1 --port=9191 -p$MYSQL_PASSWORD -e "SHOW DATABASES"
 workflows:
   test:
     jobs:
