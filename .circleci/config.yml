@@ -10,7 +10,7 @@ jobs:
           name: install mysql
           command: |
             sudo apt update
-            suod apt install mysql-server
+            sudo apt install mysql-server
       - aws-cli/setup:
           aws-region: AWS_REGION
           aws-access-key-id: AWS_ACCESS_KEY_ID
