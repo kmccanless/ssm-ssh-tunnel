@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: test tunnel
+          command: ssh -L 9090:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 -N ec2-user@18.217.248.4
+      - run:
           name: install mysql
           command: |
             sudo apt update
@@ -25,16 +28,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "1a:0b:24:e3:0f:ee:50:3e:9f:9b:28:95:81:cd:59:74"
-      - run:
-          name: SSH Tunnel
-          command:  |
-            ssh \
-            -Nf -M -4 \
-            -L 9090:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
-            -o "UserKnownHostsFile=/dev/null" \
-            -o "StrictHostKeyChecking=no" \
-            -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=us-east-2" \
-            -vvv ec2-user@i-06c66f923f50e6741
       - run:
           name: test mysql
           command: |
