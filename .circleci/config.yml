@@ -36,8 +36,9 @@ jobs:
             -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=us-east-2" \
             -vvv ec2-user@i-06c66f923f50e6741
       - run:
-          name: Release all ssm sessions
-          command: ps u | grep -- 'aws ssm start-session' | grep -v 'grep' | awk '{print $2}' | xargs kill
+          name: test mysql
+          command: |
+            mysql -u $MYSQL_USER -h localhost:9090 -p $MYSQL_PASSWORD
 workflows:
   test:
     jobs:
