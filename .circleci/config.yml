@@ -38,7 +38,10 @@ jobs:
       - run:
           name: test mysql
           command: |
-            mysql --user=$MYSQL_USER --host=127.0.0.1:9090 -p$MYSQL_PASSWORD -e "SHOW DATABASES"
+            mysql --user=$MYSQL_USER --host=127.0.0.1 --port=9090 -p$MYSQL_PASSWORD -e "SHOW DATABASES"
+      - run:
+          name: Release all ssh tunnel
+          command: ps u | grep -- 'ssh -L' | grep -v 'grep' | awk '{print $2}' | xargs kill
 workflows:
   test:
     jobs:
