@@ -7,15 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: test tunnel
-          command: |
-            ssh \
-            -o "UserKnownHostsFile=/dev/null" \
-            -o "StrictHostKeyChecking=no" \
-            -4 -vvv \
-            -L 9191:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
-            -Nf ec2-user@18.217.248.4
-      - run:
           name: install mysql
           command: |
             sudo apt update
@@ -34,6 +25,15 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "1a:0b:24:e3:0f:ee:50:3e:9f:9b:28:95:81:cd:59:74"
+      - run:
+          name: test tunnel
+          command: |
+            ssh \
+            -o "UserKnownHostsFile=/dev/null" \
+            -o "StrictHostKeyChecking=no" \
+            -4 -vvv \
+            -L 9191:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
+            -Nf ec2-user@18.217.248.4
       - run:
           name: test mysql
           command: |
