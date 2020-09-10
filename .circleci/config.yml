@@ -9,8 +9,7 @@ jobs:
       - run:
           name: install mysql
           command: |
-            yum install -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
-            yum install -y mysql-community-client
+            apt-get install mysql-client
       - aws-cli/setup:
           aws-region: AWS_REGION
           aws-access-key-id: AWS_ACCESS_KEY_ID
