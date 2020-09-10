@@ -38,7 +38,7 @@ jobs:
       - run:
           name: test mysql
           command: |
-            mysql -u $MYSQL_USER -h localhost:9090 -p $MYSQL_PASSWORD
+            mysql --user=$MYSQL_USER --host=localhost:9090 -p$MYSQL_PASSWORD -e "SHOW DATABASES"
 workflows:
   test:
     jobs:
