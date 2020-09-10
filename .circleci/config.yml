@@ -35,10 +35,6 @@ jobs:
             -L 9191:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
             -Nf ec2-user@18.217.248.4
       - run:
-          name: test mysql
-          command: |
-            mysql --user=$MYSQL_USER --host=127.0.0.1 --port=9090 -p$MYSQL_PASSWORD -e "SHOW DATABASES"
-      - run:
           name: Release all ssh tunnel
           command: ps u | grep -- 'ssh -L' | grep -v 'grep' | awk '{print $2}' | xargs kill
 workflows:
