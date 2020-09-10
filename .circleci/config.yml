@@ -33,7 +33,7 @@ jobs:
             -o "StrictHostKeyChecking=no" \
             -4 -vvv -N -q \
             -L 9191:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
-            -Nf ec2-user@18.217.248.4
+            ec2-user@18.217.248.4
       - run:
           name: Release all ssh tunnel
           command: ps u | grep -- 'ssh -L' | grep -v 'grep' | awk '{print $2}' | xargs kill
