@@ -6,6 +6,11 @@ jobs:
     executor: aws-cli/default
     steps:
       - checkout
+      - run:
+          name: install mysql
+          command: |
+            yum install -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+            yum install -y mysql-community-client
       - aws-cli/setup:
           aws-region: AWS_REGION
           aws-access-key-id: AWS_ACCESS_KEY_ID
@@ -30,19 +35,6 @@ jobs:
             -o "StrictHostKeyChecking=no" \
             -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=us-east-2" \
             -vvv ec2-user@i-06c66f923f50e6741
-      - run:
-          name: Wait until port forwarding becomes available or timeout
-          shell: /bin/bash
-          command: |
-            COUNT=0
-            until nc -z localhost 9090; do
-              if [ $COUNT -ge 15 ]; then
-                echo "Port forwarding setup timeout";
-                exit 1;
-              fi;
-              ((COUNT++))
-              sleep 1
-            done
       - run:
           name: Release all ssm sessions
           command: ps u | grep -- 'aws ssm start-session' | grep -v 'grep' | awk '{print $2}' | xargs kill
