@@ -9,11 +9,11 @@ jobs:
       - run:
           name: test tunnel
           command: |
-          ssh \
-          -o "UserKnownHostsFile=/dev/null" \
-          -o "StrictHostKeyChecking=no" \
-          -L 9090:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
-          -N ec2-user@18.217.248.4
+            ssh \
+            -o "UserKnownHostsFile=/dev/null" \
+            -o "StrictHostKeyChecking=no" \
+            -L 9090:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
+            -N ec2-user@18.217.248.4
       - run:
           name: install mysql
           command: |
