@@ -34,7 +34,7 @@ jobs:
             -4 -vvv -q \
             -L 9191:km-development-database.cluster-csnj5u8hrwsl.us-east-2.rds.amazonaws.com:3306 \
             -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=us-east-2" \
-            ec2-user@i-09d86aedf6460c798
+            ec2-user@i-0f2811b115f6e8aab
           background: true
       - run:
           name: Wait for tunnel establishment
